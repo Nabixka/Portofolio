@@ -2,17 +2,19 @@
 import { Icon } from '@iconify/vue';
 import { ref } from 'vue';
 
-const str = ref([
-  { value: "Test" },
-  { value: "Test" },
-  { value: "Test" }
-])
-
-const weak = ref([
-  { value: "Test" },
-  { value: "Test" },
-  { value: "Test" }
-])
+const sw = ref({
+  str: [
+    { value: "Disiplin dan bertanggung jawab" },
+    { value: "Mampu Berbahasa Inggris" },
+    { value: "Adaptif" },
+    { value: "Suka bekerja di lapangan"}
+  ],
+  weak: [
+    { value: "Terlalu memikirkan banyak hal" },
+    { value: "Mudah tertidur saat tidak melakukan apapun" },
+    { value: "Perlu meningkatkan kemampuan public speaking"}
+  ]
+})
 
 const Keahlian = ref({
   main: [
@@ -44,6 +46,14 @@ const Keahlian = ref({
       img: "/src/assets/vite.svg",
       name: "Vite"
     },
+    {
+      img: "/src/assets/postgres.png",
+      name: "Postgres"
+    },
+    {
+      img: "/src/assets/github.png",
+      name: "Github"
+    }
   ],
   learning: [
     {
@@ -169,18 +179,18 @@ const umur = () => {
         <span class="flex items-center gap-2 text-xl font-bold">
           <Icon icon="mdi:like-outline" width="30" color="#f7bd62"></Icon> Kelebihan
         </span>
-        <div v-if="str" class="flex flex-col gap-1 pt-3">
-          <span class="flex items-center gap-2" v-for="s in str">
+        <div class="flex flex-col gap-1 pt-3">
+          <span class="flex items-center gap-2" v-for="s in sw.str">
             <Icon width="25" icon="ei:check"></Icon>{{ s.value }}
           </span>
         </div>
       </div>
       <div class="border-2 rounded-lg p-3 border-red-200 bg-linear-to-r from-red-200/90 to-red-100">
         <span class="flex items-center gap-2 text-xl font-bold">
-          <Icon icon="mdi:dislike-outline" width="30" color="#f7bd62"></Icon> Kelebihan
+          <Icon icon="mdi:dislike-outline" width="30" color="#f7bd62"></Icon> Kekurangan
         </span>
-        <div v-if="weak" class="flex flex-col gap-1 pt-3">
-          <span class="flex items-center gap-2" v-for="w in weak">
+        <div class="flex flex-col gap-1 pt-3">
+          <span class="flex items-center gap-2" v-for="w in sw.weak">
             <Icon width="20" icon="meteor-icons:circle-xmark"></Icon>{{ w.value }}
           </span>
         </div>
