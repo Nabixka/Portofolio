@@ -8,7 +8,13 @@ const activeNavbar = ref('1')
 const isShow = ref(false)
 
 const swRef = useTemplateRef('swRef')
-const currentIndex = ref(0)
+const currentSwIndex = ref(0)
+
+const mainSkillRef = useTemplateRef('mainSKillRef')
+const currentMainSKillIndex = ref(0)
+
+const learningSkillRef = useTemplateRef('learningSkillRef')
+const currentLearningSKillIndex = ref(0)
 
 const menus = ref([
   { id: "1", 'text': 'About Me' },
@@ -42,7 +48,7 @@ const Keahlian = ref({
     { img: "/vite.svg", name: "Vite" },
     { img: "/postgres.png", name: "Postgres" },
     { img: "/github.png", name: "Github" }
-  ],
+  ],  
   learning: [
     { img: "/nestjs.png", name: "NestJs" },
     { img: "/docker.png", name: "Docker" }
@@ -54,16 +60,41 @@ const information = ref([
   { icon: "ic:twotone-email", text: "nabixka@gmail.com" },
 ])
 
-const prev = () => {
-  if (currentIndex.value > 0) {
-    currentIndex.value--
+const prev = (event) => {
+  if(event == "sw"){
+    if(currentSwIndex.value > 0) {
+      currentSwIndex.value--
+    }
+  }
+  if(event == "main"){
+    if(currentMainSKillIndex.value > 0){
+      currentMainSKillIndex.value--
+    }
+  }
+  if(event == "learning"){
+    if(currentLearningSKillIndex.value > 0){
+      currentLearningSKillIndex.value--
+    }
   }
 }
-
-const next = () => {
-  const totalSlide = 2
-  if (currentIndex.value < totalSlide - 1) {
-    currentIndex.value++
+const next = (event) => {
+  if(event == "sw"){
+    const totalSwSlide = 2 
+    if (currentSwIndex.value < totalSlide - 1) {
+      currentSwIndex.value++
+    }
+  }
+  if(event == "main"){
+    const totalMainSlide = Keahlian.value.main.length 
+    if (currentSwIndex.value < totalMainSlide - 1) {
+      currentSwIndex.value++
+    }
+  }
+  if(event == "learning"){
+    const totalLearningSlide = Keahlian.value.learning.length 
+    if (currentSwIndex.value < totalLearningSlide - 1) {
+      currentSwIndex.value++
+    }
   }
 }
 const bar = (active) => {
@@ -87,10 +118,32 @@ const umur = () => {
 useSwipe(swRef, {
   onSwipeEnd(e, direction) {
     if (direction === 'left') {
-      next()
+      next('sw')
     }
     if (direction === 'right') {
-      prev()
+      prev('sw')
+    }
+  }
+})
+
+useSwipe(mainSkillRef, {
+  onSwipeEnd(e, direction) {
+    if (direction === 'left') {
+      next('main')
+    }
+    if (direction === 'right') {
+      prev('main')
+    }
+  }
+})
+
+useSwipe(learningSkillRef, {
+  onSwipeEnd(e, direction) {
+    if (direction === 'left') {
+      next('learning')
+    }
+    if (direction === 'right') {
+      prev('learning')
     }
   }
 })
@@ -192,7 +245,8 @@ useSwipe(swRef, {
         <Icon icon="mdi:code" color="#f7bd62" width="25"></Icon>Keahlian Saya
       </span>
 
-      <div class="grid grid-cols-2 items-start gap-5">
+      <!-- Dekstop -->
+      <div class="hidden lg:grid grid-cols-2 items-start gap-5">
         <!-- Main -->
         <div class="flex flex-col items-center justify-center">
           <h3 class="text-xl font-semibold text-orange-300">Main</h3>
@@ -221,12 +275,51 @@ useSwipe(swRef, {
           </div>
         </div>
       </div>
+
+      <!-- Android -->
+      <div class="flex lg:hidden text-white w-full">
+        <h3 class="font-bold text-center w-full text-xl">Main SKill</h3>
+        
+      </div>
     </div>
 
     <!-- Kekurangan/Kelebihan -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 mb-10 gap-5 text-white">
+    <!-- Dekstop -->
+    <div class="hidden lg:grid grid-cols-2 gap-5">
+      <!-- Kelebihan -->
+      <div
+        class="p-6 rounded-2xl bg-gradient-to-b from-amber-500/10 to-amber-500/5 border border-amber-500/20 space-y-4">
+        <div class="flex items-center gap-3 text-amber-400 font-bold text-lg">
+          <Icon icon="mdi:like-outline" class="text-2xl" />
+          <span>Kelebihan</span>
+        </div>
+        <ul class="space-y-2">
+          <li v-for="s in sw.str" :key="s.value" class="flex items-start gap-3 text-sm text-zinc-300">
+            <Icon icon="ei:check" class="text-amber-400 text-xl shrink-0 mt-0.5" />
+            <span>{{ s.value }}</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Kekurangan -->
+      <div class="p-6 rounded-2xl bg-zinc-950/60 border border-zinc-800 space-y-4">
+        <div class="flex items-center gap-3 text-zinc-400 font-bold text-lg">
+          <Icon icon="mdi:dislike-outline" class="text-2xl text-amber-500/70" />
+          <span>Kekurangan</span>
+        </div>
+        <ul class="space-y-2">
+          <li v-for="w in sw.weak" :key="w.value" class="flex items-start gap-3 text-sm text-zinc-400">
+            <Icon icon="meteor-icons:circle-xmark" class="text-zinc-500 text-base shrink-0 mt-0.5" />
+            <span>{{ w.value }}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- Android -->
+    <div class="flex lg:hidden mb-10 gap-5 text-white">
       <div class="overflow-hidden" ref="swRef">
-        <div class="flex w-full transition-all duration-300 ease-out" :style="{ transform: `translateX(-${currentIndex * 100}%)` }">
+        <div class="flex w-full transition-all duration-300 ease-out"
+          :style="{ transform: `translateX(-${currentSwIndex * 100}%)` }">
 
           <!-- Kelebihan -->
           <div
@@ -259,9 +352,9 @@ useSwipe(swRef, {
 
         </div>
         <div class="flex justify-center gap-2 mt-4">
-          <button v-for="(dot, idx) in 2" :key="idx" @click="currentIndex = idx"
+          <button v-for="(dot, idx) in 2" :key="idx" @click="currentSwIndex = idx"
             class="h-2 rounded-full transition-all duration-300"
-            :class="currentIndex === idx ? 'w-6 bg-orange-400' : 'w-2 bg-zinc-700'"></button>
+            :class="currentSwIndex === idx ? 'w-6 bg-orange-400' : 'w-2 bg-zinc-700'"></button>
         </div>
       </div>
     </div>
