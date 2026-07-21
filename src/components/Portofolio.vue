@@ -1,32 +1,33 @@
 <script setup>
 import { Icon } from '@iconify/vue';
-import { useWindowScroll } from '@vueuse/core';
-import { computed, ref } from 'vue';
+import { useSwipe } from '@vueuse/core';
+import { computed, onMounted, ref, useTemplateRef } from 'vue';
 
-const { y } = useWindowScroll()
 const about = ref()
 const activeNavbar = ref('1')
 const isShow = ref(false)
 
+const swRef = useTemplateRef('swRef')
+const currentIndex = ref(0)
+
 const menus = ref([
-  { id:"1", 'text': 'About Me'},
-  { id:"2", 'text': 'Keahlian Saya'},
-  { id:"3",'text': 'Project'},
-  { id:"4", 'text': 'Pendidikan'},
-  { id:"5", 'text': 'Prestasi'},
+  { id: "1", 'text': 'About Me' },
+  { id: "2", 'text': 'Keahlian Saya' },
+  { id: "3", 'text': 'Project' },
+  { id: "4", 'text': 'Pendidikan' },
+  { id: "5", 'text': 'Prestasi' },
 ])
 
 const sw = ref({
   str: [
-    { value: "Disiplin dan bertanggung jawab" },
-    { value: "Mampu Berbahasa Inggris" },
-    { value: "Adaptif" },
-    { value: "Suka bekerja di lapangan"}
+    { id: 1, value: "Adaptif" },
+    { id: 2, value: "Suka bekerja di lapangan" },
+    { id: 3, value: "Mampu Berbahasa Inggris" },
   ],
   weak: [
-    { value: "Terlalu memikirkan banyak hal" },
-    { value: "Mudah tertidur saat tidak melakukan apapun" },
-    { value: "Perlu meningkatkan kemampuan public speaking"}
+    { id: 1, value: "Terlalu memikirkan banyak hal" },
+    { id: 2, value: "Mudah tertidur saat tidak melakukan apapun" },
+    { id: 3, value: "Perlu meningkatkan kemampuan public speaking" }
   ]
 })
 
@@ -53,9 +54,21 @@ const information = ref([
   { icon: "ic:twotone-email", text: "nabixka@gmail.com" },
 ])
 
+const prev = () => {
+  if (currentIndex.value > 0) {
+    currentIndex.value--
+  }
+}
+
+const next = () => {
+  const totalSlide = 2
+  if (currentIndex.value < totalSlide - 1) {
+    currentIndex.value++
+  }
+}
 const bar = (active) => {
   return activeNavbar.value == active ? "text-white lg:text-orange-400 transition bg-orange-400 lg:bg-zinc-950/0" : "text-white"
-} 
+}
 
 const umur = () => {
   const birthDate = new Date('2008-12-27')
@@ -71,31 +84,31 @@ const umur = () => {
   return umur
 }
 
+useSwipe(swRef, {
+  onSwipeEnd(e, direction) {
+    if (direction === 'left') {
+      next()
+    }
+    if (direction === 'right') {
+      prev()
+    }
+  }
+})
+
 </script>
 
 <template>
-  <Transition
-    enter-active-class="transition-opacity duration-300 ease-out"
-    enter-from-class="opacity-0"
-    enter-to-class="opacity-100"
-    leave-active-class="transition-opacity duration-300 ease-in"
-    leave-from-class="opacity-100"
-    leave-to-class="opacity-0" >
-    <div 
-      v-if="isShow" 
-      @click="isShow = false" 
-      class="fixed inset-0 bg-black/50 z-40"
-    ></div>
+  <Transition enter-active-class="transition-opacity duration-300 ease-out" enter-from-class="opacity-0"
+    enter-to-class="opacity-100" leave-active-class="transition-opacity duration-300 ease-in"
+    leave-from-class="opacity-100" leave-to-class="opacity-0">
+    <div v-if="isShow" @click="isShow = false" class="fixed inset-0 bg-black/50 z-40"></div>
   </Transition>
 
-  <Transition
-    enter-active-class="transition-transform duration-300 ease-out"
-    enter-from-class="translate-x-full"
-    enter-to-class="translate-x-0"
-    leave-active-class="transition-transform duration-300 ease-in"
-    leave-from-class="translate-x-0"
-    leave-to-class="translate-x-full" >
-    <div v-if="isShow" class="fixed top-0 right-0 bottom-0 h-screen w-4/5 sm:w-2/5 bg-zinc-800 z-50 text-white shadow-xl flex flex-col" >
+  <Transition enter-active-class="transition-transform duration-300 ease-out" enter-from-class="translate-x-full"
+    enter-to-class="translate-x-0" leave-active-class="transition-transform duration-300 ease-in"
+    leave-from-class="translate-x-0" leave-to-class="translate-x-full">
+    <div v-if="isShow"
+      class="fixed top-0 right-0 bottom-0 h-screen w-4/5 sm:w-2/5 bg-zinc-800 z-50 text-white shadow-xl flex flex-col">
       <div class="flex justify-between items-center p-5 border-b border-zinc-700">
         <h3 class="font-bold text-2xl">Nabixka</h3>
         <button @click="isShow = false" class="p-1 text-zinc-400 hover:text-white">
@@ -104,12 +117,9 @@ const umur = () => {
       </div>
 
       <div class="flex flex-col items-start pt-3">
-        <button 
-          v-for="menu in menus" 
-          :key="menu.id" 
-          @click="activeNavbar = menu.id; isShow = false" 
-          :class="bar(menu.id)" 
-          class="font-semibold border-b border-zinc-700/50 hover:cursor-pointer py-3.5 w-full text-start pl-6 transition-colors" >
+        <button v-for="menu in menus" :key="menu.id" @click="activeNavbar = menu.id; isShow = false"
+          :class="bar(menu.id)"
+          class="font-semibold border-b border-zinc-700/50 hover:cursor-pointer py-3.5 w-full text-start pl-6 transition-colors">
           {{ menu.text }}
         </button>
       </div>
@@ -117,11 +127,10 @@ const umur = () => {
   </Transition>
 
   <!-- Home -->
-  <section
-    ref="aboutRef"
+  <section ref="aboutRef"
     class="text-white bg-linear-to-r/hsl from-zinc-950 to-zinc-900 min-h-screen flex flex-col gap-15">
     <!-- Bar -->
-    <div class="flex p-3 pl-0 items-center justify-between text-white border-b ml-2 mr-2 lg:ml-20 lg:mr-20">
+    <div class="flex p-3 pl-0 items-center justify-between text-white border-b ml-5 mr-5 lg:ml-20 lg:mr-20">
       <div class="flex items-end">
         <img class="w-10" src="/public/N_logo.png">
         <h3 class="text-2xl font-semibold">abixka</h3>
@@ -129,7 +138,8 @@ const umur = () => {
 
       <!-- Dekstop -->
       <div class="gap-10 hidden lg:flex">
-        <button v-for="menu in menus" @click="activeNavbar = menu.id" :class="bar(menu.id)" class="hover:cursor-pointer">{{ menu.text }}</button>
+        <button v-for="menu in menus" @click="activeNavbar = menu.id" :class="bar(menu.id)"
+          class="hover:cursor-pointer">{{ menu.text }}</button>
       </div>
 
       <!-- Android -->
@@ -141,24 +151,26 @@ const umur = () => {
     </div>
 
     <!-- About Me -->
-    <div class="flex justify-between gap-3 lg:flex-row flex-col-reverse pl-3 pr-3 lg:pl-20 lg:pr-20">
+    <div class="flex justify-between gap-3 lg:flex-row flex-col-reverse pl-5 pr-5 lg:pl-20 lg:pr-20">
       <div class="flex flex-col justify-between w-full lg:w-1/2">
-        <h5 class="flex items-center gap-1 text-lg font-semibold text-orange-400">Halo, 
+        <h5 class="flex items-center gap-1 text-lg font-semibold text-orange-400">Halo,
           <span class="text-orange-300 pr-1">Saya</span>
         </h5>
         <h1 class="text-2xl lg:text-4xl font-bold">Muhammad Fadhil Abiprayana</h1>
         <h3 class="font-semibold text-xl lg:text-2xl text-orange-400">Web Developer <span class="text-white">| Cloud
             Engineer</span></h3>
-        <h6 class="text-sm pt-1 pb-1 lg:pt-0 lg:pb-0 lg:text-md ">Saya adalah seorang pelajar dan programmer yang memiliki semangat tinggi dalam dunia teknologi, khususnya
+        <h6 class="text-sm pt-1 pb-1 lg:pt-0 lg:pb-0 lg:text-md ">Saya adalah seorang pelajar dan programmer yang
+          memiliki semangat tinggi dalam dunia teknologi, khususnya
           dalam pengembangan web. Saya suka membangun aplikasi yang bermanfaat.</h6>
 
         <!-- Information -->
-        <div class="grid grid-cols-2 gap-3">
-          <span v-for="i in information" class="text-sm md:text-md p-2 border border-gray-200 rounded rounded-lg flex items-center gap-2">
+        <div class="grid grid-cols-2 gap-3 pt-1 lg:pt-0">
+          <span v-for="i in information"
+            class="text-sm md:text-md p-2 border border-gray-200 rounded rounded-lg flex items-center gap-2">
             <Icon :icon="i.icon" color="#f7bd62" width="24"></Icon>
             {{ i.text }}
           </span>
-          
+
           <span class="text-sm md:text-md p-2 border border-gray-200 rounded rounded-lg flex items-center gap-2">
             <Icon icon="formkit:date" color="#f7bd62" width="24"></Icon>
             {{ umur() }} Tahun
@@ -173,7 +185,8 @@ const umur = () => {
   </section>
 
   <!-- Keahlian -->
-  <section id="skill" class="min-h-screen bg-linear-to-r/hsl from-zinc-950/90 to-zinc-900/90 pl-20 flex flex-col gap-15 pr-20">
+  <section id="skill"
+    class="min-h-screen bg-linear-to-r/hsl from-zinc-950/90 to-zinc-900/90 pl-5 pr-5 lg:pl-20 lg:pr-20 flex flex-col gap-15">
     <div>
       <span class="flex font-bold items-center justify-center pt-5 gap-3 text-2xl text-orange-400">
         <Icon icon="mdi:code" color="#f7bd62" width="25"></Icon>Keahlian Saya
@@ -211,35 +224,47 @@ const umur = () => {
     </div>
 
     <!-- Kekurangan/Kelebihan -->
-    <div class="grid grid-cols-2 gap-5">
-        <!-- Kelebihan -->
-        <div class="p-6 rounded-2xl bg-gradient-to-b from-amber-500/10 to-amber-500/5 border border-amber-500/20 space-y-4">
-          <div class="flex items-center gap-3 text-amber-400 font-bold text-lg">
-            <Icon icon="mdi:like-outline" class="text-2xl" /> 
-            <span>Kelebihan</span>
-          </div>
-          <ul class="space-y-2">
-            <li v-for="s in sw.str" :key="s.value" class="flex items-start gap-3 text-sm text-zinc-300">
-              <Icon icon="ei:check" class="text-amber-400 text-xl shrink-0 mt-0.5" />
-              <span>{{ s.value }}</span>
-            </li>
-          </ul>
-        </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 mb-10 gap-5 text-white">
+      <div class="overflow-hidden" ref="swRef">
+        <div class="flex w-full transition-all duration-300 ease-out" :style="{ transform: `translateX(-${currentIndex * 100}%)` }">
 
-        <!-- Kekurangan -->
-        <div class="p-6 rounded-2xl bg-zinc-950/60 border border-zinc-800 space-y-4">
-          <div class="flex items-center gap-3 text-zinc-400 font-bold text-lg">
-            <Icon icon="mdi:dislike-outline" class="text-2xl text-amber-500/70" /> 
-            <span>Kekurangan</span>
+          <!-- Kelebihan -->
+          <div
+            class="w-full shrink-0 p-6 rounded-2xl bg-gradient-to-b from-amber-500/10 to-amber-500/5 border border-amber-500/20 space-y-4">
+            <div class="flex items-center gap-3 text-amber-400 font-bold text-lg">
+              <Icon icon="mdi:like-outline" class="text-2xl" />
+              <span>Kelebihan</span>
+            </div>
+            <ul class="space-y-2">
+              <li v-for="s in sw.str" :key="s.value" class="flex items-start gap-3 text-sm text-zinc-300">
+                <Icon icon="ei:check" class="text-amber-400 text-xl shrink-0 mt-0.5" />
+                <span>{{ s.value }}</span>
+              </li>
+            </ul>
           </div>
-          <ul class="space-y-2">
-            <li v-for="w in sw.weak" :key="w.value" class="flex items-start gap-3 text-sm text-zinc-400">
-              <Icon icon="meteor-icons:circle-xmark" class="text-zinc-500 text-base shrink-0 mt-0.5" />
-              <span>{{ w.value }}</span>
-            </li>
-          </ul>
+
+          <!-- Kekurangan -->
+          <div class="w-full shrink-0 p-6 rounded-2xl bg-zinc-950/60 border border-zinc-800 space-y-4">
+            <div class="flex items-center gap-3 text-zinc-400 font-bold text-lg">
+              <Icon icon="mdi:dislike-outline" class="text-2xl text-amber-500/70" />
+              <span>Kekurangan</span>
+            </div>
+            <ul class="space-y-2">
+              <li v-for="w in sw.weak" :key="w.value" class="flex items-start gap-3 text-sm text-zinc-400">
+                <Icon icon="meteor-icons:circle-xmark" class="text-zinc-500 text-base shrink-0 mt-0.5" />
+                <span>{{ w.value }}</span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+        <div class="flex justify-center gap-2 mt-4">
+          <button v-for="(dot, idx) in 2" :key="idx" @click="currentIndex = idx"
+            class="h-2 rounded-full transition-all duration-300"
+            :class="currentIndex === idx ? 'w-6 bg-orange-400' : 'w-2 bg-zinc-700'"></button>
         </div>
       </div>
+    </div>
   </section>
 
   <section class="bg-linear-to-r/hsl from-zinc-900 via-gray-800/80 to-gray-700/70 min-h-screen text-white">
