@@ -1,6 +1,19 @@
 <script setup>
 import { Icon } from '@iconify/vue';
-import { ref } from 'vue';
+import { useWindowScroll } from '@vueuse/core';
+import { computed, ref } from 'vue';
+
+const { y } = useWindowScroll()
+const about = ref()
+const activeNavbar = ref('1')
+
+const menus = ref([
+  { id:"1", 'text': 'About Me'},
+  { id:"2", 'text': 'Keahlian Saya'},
+  { id:"3",'text': 'Project'},
+  { id:"4", 'text': 'Pendidikan'},
+  { id:"5", 'text': 'Prestasi'},
+])
 
 const sw = ref({
   str: [
@@ -67,6 +80,10 @@ const Keahlian = ref({
   ]
 })
 
+const bar = (active) => {
+  return activeNavbar.value == active ? "text-orange-400 transition" : "text-white"
+} 
+
 const umur = () => {
   const birthDate = new Date('2008-12-27')
   const date = new Date()
@@ -86,16 +103,13 @@ const umur = () => {
 <template>
 
   <section
-    class="text-white bg-linear-to-br from-gray-950/70 via-gray-800/70 to-gray-700/70 min-h-screen flex flex-col gap-15">
+    ref="aboutRef"
+    class="text-white bg-linear-to-r/hsl from-zinc-950 to-zinc-900 min-h-screen flex flex-col gap-15">
     <!-- Bar -->
-    <div class="flex p-3 pl-20 items-center justify-between text-white">
+    <div class="flex p-3 pl-0 items-center justify-between text-white border-b ml-20 mr-20">
       <h3 class="text-2xl font-semibold">M. Fadhil</h3>
       <div class="flex gap-10">
-        <h5>About Me</h5>
-        <h5>Keahlian Saya</h5>
-        <h5>Project</h5>
-        <h5>Pendidikan</h5>
-        <h5>Prestasi</h5>
+        <button v-for="menu in menus" @click="activeNavbar = menu.id" :class="bar(menu.id)" class="hover:cursor-pointer">{{ menu.text }}</button>
       </div>
       <div></div>
     </div>
@@ -103,9 +117,8 @@ const umur = () => {
     <!-- About Me -->
     <div class="flex justify-between pl-20 pr-20">
       <div class="flex flex-col justify-between w-1/2">
-        <h5 class="flex items-center gap-1 text-lg font-semibold text-orange-400">Halo, <span
-            class="text-orange-300 pr-1">Saya</span>
-          <Icon icon="entypo:hand" color="#f7bd62"></Icon>
+        <h5 class="flex items-center gap-1 text-lg font-semibold text-orange-400">Halo, 
+          <span class="text-orange-300 pr-1">Saya</span>
         </h5>
         <h1 class="text-4xl font-bold">Muhammad Fadhil Abiprayana</h1>
         <h3 class="font-semibold text-2xl text-orange-400">Web Developer <span class="text-white">| Cloud
@@ -134,18 +147,18 @@ const umur = () => {
     </div>
   </section>
 
-  <section class="min-h-screen bg-gray-100/50 pl-20 flex flex-col gap-15 pr-20">
+  <section id="skill" class="min-h-screen bg-linear-to-r/hsl from-zinc-950/90 to-zinc-900/90 pl-20 flex flex-col gap-15 pr-20">
 
     <!-- Keahlian -->
     <div>
-      <span class="flex font-bold items-center justify-center pt-5 gap-3 text-2xl">
+      <span class="flex font-bold items-center justify-center pt-5 gap-3 text-2xl text-orange-400">
         <Icon icon="mdi:code" color="#f7bd62" width="25"></Icon>Keahlian Saya
       </span>
 
       <div class="grid grid-cols-2 items-start gap-5">
         <!-- Main -->
         <div class="flex flex-col items-center justify-center">
-          <h3 class="text-xl font-semibold">Main</h3>
+          <h3 class="text-xl font-semibold text-orange-300">Main</h3>
           <div class="grid grid-cols-5 flex gap-5 pt-2">
             <div v-for="m in Keahlian.main" :key="m.name"
               class="flex flex-col items-center justify-between bg-white shadow-lg p-3 rounded-lg w-25 h-30">
@@ -159,7 +172,7 @@ const umur = () => {
 
         <!-- Learning -->
         <div class="flex flex-col items-center justify-center">
-          <h3 class="text-xl font-semibold">Learning</h3>
+          <h3 class="text-xl font-semibold text-orange-300">Learning</h3>
           <div class="flex gap-5 pt-2">
             <div v-for="l in Keahlian.learning" :key="l.name"
               class="flex flex-col items-center justify-between bg-white shadow-lg p-3 rounded-lg w-25 h-30">
@@ -175,26 +188,37 @@ const umur = () => {
 
     <!-- Kekurangan/Kelebihan -->
     <div class="grid grid-cols-2 gap-5">
-      <div class="border-2 rounded-lg p-3 border-blue-200 bg-blue-100">
-        <span class="flex items-center gap-2 text-xl font-bold">
-          <Icon icon="mdi:like-outline" width="30" color="#f7bd62"></Icon> Kelebihan
-        </span>
-        <div class="flex flex-col gap-1 pt-3">
-          <span class="flex items-center gap-2" v-for="s in sw.str">
-            <Icon width="25" icon="ei:check"></Icon>{{ s.value }}
-          </span>
+        <!-- Kelebihan -->
+        <div class="p-6 rounded-2xl bg-gradient-to-b from-amber-500/10 to-amber-500/5 border border-amber-500/20 space-y-4">
+          <div class="flex items-center gap-3 text-amber-400 font-bold text-lg">
+            <Icon icon="mdi:like-outline" class="text-2xl" /> 
+            <span>Kelebihan</span>
+          </div>
+          <ul class="space-y-2">
+            <li v-for="s in sw.str" :key="s.value" class="flex items-start gap-3 text-sm text-zinc-300">
+              <Icon icon="ei:check" class="text-amber-400 text-xl shrink-0 mt-0.5" />
+              <span>{{ s.value }}</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Kekurangan -->
+        <div class="p-6 rounded-2xl bg-zinc-950/60 border border-zinc-800 space-y-4">
+          <div class="flex items-center gap-3 text-zinc-400 font-bold text-lg">
+            <Icon icon="mdi:dislike-outline" class="text-2xl text-amber-500/70" /> 
+            <span>Kekurangan</span>
+          </div>
+          <ul class="space-y-2">
+            <li v-for="w in sw.weak" :key="w.value" class="flex items-start gap-3 text-sm text-zinc-400">
+              <Icon icon="meteor-icons:circle-xmark" class="text-zinc-500 text-base shrink-0 mt-0.5" />
+              <span>{{ w.value }}</span>
+            </li>
+          </ul>
         </div>
       </div>
-      <div class="border-2 rounded-lg p-3 border-red-200 bg-linear-to-r from-red-200/90 to-red-100">
-        <span class="flex items-center gap-2 text-xl font-bold">
-          <Icon icon="mdi:dislike-outline" width="30" color="#f7bd62"></Icon> Kekurangan
-        </span>
-        <div class="flex flex-col gap-1 pt-3">
-          <span class="flex items-center gap-2" v-for="w in sw.weak">
-            <Icon width="20" icon="meteor-icons:circle-xmark"></Icon>{{ w.value }}
-          </span>
-        </div>
-      </div>
-    </div>
+  </section>
+
+  <section class="bg-linear-to-r/hsl from-zinc-900 via-gray-800/80 to-gray-700/70 min-h-screen text-white">
+
   </section>
 </template>
