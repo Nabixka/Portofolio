@@ -32,49 +32,49 @@ const sw = ref({
 const Keahlian = ref({
   main: [
     {
-      img: "/src/assets/html.jpg",
+      img: "/html.jpg",
       name: "HTML"
     },
     {
-      img: "/src/assets/tailwindcss.png",
+      img: "/tailwindcss.png",
       name: "Tailwindcss"
     },
     {
-      img: "/src/assets/js.png",
+      img: "/js.png",
       name: "Javascript"
     },
     {
-      img: "/src/assets/node.png",
+      img: "/node.png",
       name: "NodeJs"
     },
     {
-      img: "/src/assets/vue.svg",
+      img: "/vue.svg",
       name: "Vue"
     },
     {
-      img: "/src/assets/react.png",
+      img: "/react.png",
       name: "React"
     },
     {
-      img: "/src/assets/vite.svg",
+      img: "/vite.svg",
       name: "Vite"
     },
     {
-      img: "/src/assets/postgres.png",
+      img: "/postgres.png",
       name: "Postgres"
     },
     {
-      img: "/src/assets/github.png",
+      img: "/github.png",
       name: "Github"
     }
   ],
   learning: [
     {
-      img: "/src/assets/nestjs.png",
+      img: "/nestjs.png",
       name: "NestJs"
     },
     {
-      img: "/src/assets/docker.png",
+      img: "/docker.png",
       name: "Docker"
     }
   ]
@@ -143,7 +143,7 @@ const umur = () => {
           <Icon width="35" icon="mdi:github" />
         </div>
       </div>
-      <img src="/src/assets/goku.png" class="w-1/3 h-90 w-85 rounded-lg shadow-lg shadow-gray-900">
+      <img src="/goku.png" class="w-1/3 h-90 w-85 rounded-lg shadow-lg shadow-gray-900">
     </div>
   </section>
 
