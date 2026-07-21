@@ -32,54 +32,26 @@ const sw = ref({
 
 const Keahlian = ref({
   main: [
-    {
-      img: "/html.jpg",
-      name: "HTML"
-    },
-    {
-      img: "/tailwindcss.png",
-      name: "Tailwindcss"
-    },
-    {
-      img: "/js.png",
-      name: "Javascript"
-    },
-    {
-      img: "/node.png",
-      name: "NodeJs"
-    },
-    {
-      img: "/vue.svg",
-      name: "Vue"
-    },
-    {
-      img: "/react.png",
-      name: "React"
-    },
-    {
-      img: "/vite.svg",
-      name: "Vite"
-    },
-    {
-      img: "/postgres.png",
-      name: "Postgres"
-    },
-    {
-      img: "/github.png",
-      name: "Github"
-    }
+    { img: "/html.jpg", name: "HTML" },
+    { img: "/tailwindcss.png", name: "Tailwindcss" },
+    { img: "/js.png", name: "Javascript" },
+    { img: "/node.png", name: "NodeJs" },
+    { img: "/vue.svg", name: "Vue" },
+    { img: "/react.png", name: "React" },
+    { img: "/vite.svg", name: "Vite" },
+    { img: "/postgres.png", name: "Postgres" },
+    { img: "/github.png", name: "Github" }
   ],
   learning: [
-    {
-      img: "/nestjs.png",
-      name: "NestJs"
-    },
-    {
-      img: "/docker.png",
-      name: "Docker"
-    }
+    { img: "/nestjs.png", name: "NestJs" },
+    { img: "/docker.png", name: "Docker" }
   ]
 })
+
+const information = ref([
+  { icon: "bx:map", text: "Jakarta, Indonesia" },
+  { icon: "ic:twotone-email", text: "nabixka@gmail.com" },
+])
 
 const bar = (active) => {
   return activeNavbar.value == active ? "text-white lg:text-orange-400 transition bg-orange-400 lg:bg-zinc-950/0" : "text-white"
@@ -144,6 +116,7 @@ const umur = () => {
     </div>
   </Transition>
 
+  <!-- Home -->
   <section
     ref="aboutRef"
     class="text-white bg-linear-to-r/hsl from-zinc-950 to-zinc-900 min-h-screen flex flex-col gap-15">
@@ -178,17 +151,16 @@ const umur = () => {
             Engineer</span></h3>
         <h6 class="text-sm pt-1 pb-1 lg:pt-0 lg:pb-0 lg:text-md ">Saya adalah seorang pelajar dan programmer yang memiliki semangat tinggi dalam dunia teknologi, khususnya
           dalam pengembangan web. Saya suka membangun aplikasi yang bermanfaat.</h6>
+
+        <!-- Information -->
         <div class="grid grid-cols-2 gap-3">
-          <span class="p-2 border border-gray-200 rounded rounded-lg flex items-center gap-2">
-            <Icon icon="bx:map" color="#f7bd62"></Icon>
-            Jakarta, Indonesia
+          <span v-for="i in information" class="text-sm md:text-md p-2 border border-gray-200 rounded rounded-lg flex items-center gap-2">
+            <Icon :icon="i.icon" color="#f7bd62" width="24"></Icon>
+            {{ i.text }}
           </span>
-          <span class="p-2 border border-gray-200 rounded rounded-lg flex items-center gap-2">
-            <Icon icon="ic:outline-email" color="#f7bd62"></Icon>
-            nabixka05@gmail.com
-          </span>
-          <span class="p-2 border border-gray-200 rounded rounded-lg flex items-center gap-2">
-            <Icon icon="formkit:date" color="#f7bd62"></Icon>
+          
+          <span class="text-sm md:text-md p-2 border border-gray-200 rounded rounded-lg flex items-center gap-2">
+            <Icon icon="formkit:date" color="#f7bd62" width="24"></Icon>
             {{ umur() }} Tahun
           </span>
         </div>
@@ -200,9 +172,8 @@ const umur = () => {
     </div>
   </section>
 
+  <!-- Keahlian -->
   <section id="skill" class="min-h-screen bg-linear-to-r/hsl from-zinc-950/90 to-zinc-900/90 pl-20 flex flex-col gap-15 pr-20">
-
-    <!-- Keahlian -->
     <div>
       <span class="flex font-bold items-center justify-center pt-5 gap-3 text-2xl text-orange-400">
         <Icon icon="mdi:code" color="#f7bd62" width="25"></Icon>Keahlian Saya
