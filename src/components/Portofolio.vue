@@ -6,6 +6,7 @@ import { computed, ref } from 'vue';
 const { y } = useWindowScroll()
 const about = ref()
 const activeNavbar = ref('1')
+const isShow = ref(false)
 
 const menus = ref([
   { id:"1", 'text': 'About Me'},
@@ -81,7 +82,7 @@ const Keahlian = ref({
 })
 
 const bar = (active) => {
-  return activeNavbar.value == active ? "text-orange-400 transition" : "text-white"
+  return activeNavbar.value == active ? "text-white lg:text-orange-400 transition bg-orange-400 lg:bg-zinc-950/0" : "text-white"
 } 
 
 const umur = () => {
@@ -101,31 +102,83 @@ const umur = () => {
 </script>
 
 <template>
+  <Transition
+    enter-active-class="transition-opacity duration-300 ease-out"
+    enter-from-class="opacity-0"
+    enter-to-class="opacity-100"
+    leave-active-class="transition-opacity duration-300 ease-in"
+    leave-from-class="opacity-100"
+    leave-to-class="opacity-0" >
+    <div 
+      v-if="isShow" 
+      @click="isShow = false" 
+      class="fixed inset-0 bg-black/50 z-40"
+    ></div>
+  </Transition>
+
+  <Transition
+    enter-active-class="transition-transform duration-300 ease-out"
+    enter-from-class="translate-x-full"
+    enter-to-class="translate-x-0"
+    leave-active-class="transition-transform duration-300 ease-in"
+    leave-from-class="translate-x-0"
+    leave-to-class="translate-x-full" >
+    <div v-if="isShow" class="fixed top-0 right-0 bottom-0 h-screen w-4/5 sm:w-2/5 bg-zinc-800 z-50 text-white shadow-xl flex flex-col" >
+      <div class="flex justify-between items-center p-5 border-b border-zinc-700">
+        <h3 class="font-bold text-2xl">Nabixka</h3>
+        <button @click="isShow = false" class="p-1 text-zinc-400 hover:text-white">
+          <Icon icon="mdi:close" width="28" />
+        </button>
+      </div>
+
+      <div class="flex flex-col items-start pt-3">
+        <button 
+          v-for="menu in menus" 
+          :key="menu.id" 
+          @click="activeNavbar = menu.id; isShow = false" 
+          :class="bar(menu.id)" 
+          class="font-semibold border-b border-zinc-700/50 hover:cursor-pointer py-3.5 w-full text-start pl-6 transition-colors" >
+          {{ menu.text }}
+        </button>
+      </div>
+    </div>
+  </Transition>
 
   <section
     ref="aboutRef"
     class="text-white bg-linear-to-r/hsl from-zinc-950 to-zinc-900 min-h-screen flex flex-col gap-15">
     <!-- Bar -->
-    <div class="flex p-3 pl-0 items-center justify-between text-white border-b ml-20 mr-20">
-      <h3 class="text-2xl font-semibold">M. Fadhil</h3>
-      <div class="flex gap-10">
+    <div class="flex p-3 pl-0 items-center justify-between text-white border-b ml-2 mr-2 lg:ml-20 lg:mr-20">
+      <div class="flex items-end">
+        <img class="w-10" src="/public/N_logo.png">
+        <h3 class="text-2xl font-semibold">abixka</h3>
+      </div>
+
+      <!-- Dekstop -->
+      <div class="gap-10 hidden lg:flex">
         <button v-for="menu in menus" @click="activeNavbar = menu.id" :class="bar(menu.id)" class="hover:cursor-pointer">{{ menu.text }}</button>
       </div>
-      <div></div>
+
+      <!-- Android -->
+      <Button @click="isShow = true" class="flex lg:hidden">
+        <Icon icon="pajamas:hamburger" width="33"></Icon>
+      </Button>
+
+      <div class="hidden lg:flex"></div>
     </div>
 
     <!-- About Me -->
-    <div class="flex justify-between pl-20 pr-20">
-      <div class="flex flex-col justify-between w-1/2">
+    <div class="flex justify-between gap-3 lg:flex-row flex-col-reverse pl-3 pr-3 lg:pl-20 lg:pr-20">
+      <div class="flex flex-col justify-between w-full lg:w-1/2">
         <h5 class="flex items-center gap-1 text-lg font-semibold text-orange-400">Halo, 
           <span class="text-orange-300 pr-1">Saya</span>
         </h5>
-        <h1 class="text-4xl font-bold">Muhammad Fadhil Abiprayana</h1>
-        <h3 class="font-semibold text-2xl text-orange-400">Web Developer <span class="text-white">| Cloud
+        <h1 class="text-2xl lg:text-4xl font-bold">Muhammad Fadhil Abiprayana</h1>
+        <h3 class="font-semibold text-xl lg:text-2xl text-orange-400">Web Developer <span class="text-white">| Cloud
             Engineer</span></h3>
-        <h6>Saya adalah seorang pelajar dan programmer yang memiliki semangat tinggi dalam dunia teknologi, khususnya
+        <h6 class="text-sm pt-1 pb-1 lg:pt-0 lg:pb-0 lg:text-md ">Saya adalah seorang pelajar dan programmer yang memiliki semangat tinggi dalam dunia teknologi, khususnya
           dalam pengembangan web. Saya suka membangun aplikasi yang bermanfaat.</h6>
-        <div class="flex gap-2">
+        <div class="grid grid-cols-2 gap-3">
           <span class="p-2 border border-gray-200 rounded rounded-lg flex items-center gap-2">
             <Icon icon="bx:map" color="#f7bd62"></Icon>
             Jakarta, Indonesia
@@ -139,11 +192,11 @@ const umur = () => {
             {{ umur() }} Tahun
           </span>
         </div>
-        <div>
+        <div class="pt-2 lg:pt-0">
           <Icon width="35" icon="mdi:github" />
         </div>
       </div>
-      <img src="/goku.png" class="w-1/3 h-90 w-85 rounded-lg shadow-lg shadow-gray-900">
+      <img src="/goku.png" class="w-1/3 h-90 w-full lg:w-1/3  lg:w rounded-lg shadow-lg shadow-gray-900">
     </div>
   </section>
 
@@ -161,7 +214,7 @@ const umur = () => {
           <h3 class="text-xl font-semibold text-orange-300">Main</h3>
           <div class="grid grid-cols-5 flex gap-5 pt-2">
             <div v-for="m in Keahlian.main" :key="m.name"
-              class="flex flex-col items-center justify-between bg-white shadow-lg p-3 rounded-lg w-25 h-30">
+              class="hover:scale-105 hover:bg-gray-100 transition flex flex-col items-center justify-between bg-white shadow-lg p-3 rounded-lg w-25 h-30">
               <div class="flex flex-1 items-center justify-center">
                 <img class="h-12 w-12 object-contain" :src="m.img" :alt="m.name">
               </div>
@@ -221,4 +274,5 @@ const umur = () => {
   <section class="bg-linear-to-r/hsl from-zinc-900 via-gray-800/80 to-gray-700/70 min-h-screen text-white">
 
   </section>
+
 </template>
