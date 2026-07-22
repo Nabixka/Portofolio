@@ -80,7 +80,7 @@ const prev = (event) => {
 const next = (event) => {
   if(event == "sw"){
     const totalSwSlide = 2 
-    if (currentSwIndex.value < totalSlide - 1) {
+    if (currentSwIndex.value < totalSwSlide - 1) {
       currentSwIndex.value++
     }
   }
@@ -181,11 +181,11 @@ useSwipe(learningSkillRef, {
 
   <!-- Home -->
   <section ref="aboutRef"
-    class="text-white bg-linear-to-r/hsl from-zinc-950 to-zinc-900 min-h-screen flex flex-col gap-15">
+    class="text-white bg-linear-to-r/hsl from-zinc-950 to-zinc-900 min-h-screen flex flex-col gap-10">
     <!-- Bar -->
     <div class="flex p-3 pl-0 items-center justify-between text-white border-b ml-5 mr-5 lg:ml-20 lg:mr-20">
       <div class="flex items-end">
-        <img class="w-10" src="/public/N_logo.png">
+        <img class="w-10" src="/N_logo.png">
         <h3 class="text-2xl font-semibold">abixka</h3>
       </div>
 
@@ -204,14 +204,15 @@ useSwipe(learningSkillRef, {
     </div>
 
     <!-- About Me -->
-    <div class="flex justify-between gap-3 lg:flex-row flex-col-reverse pl-5 pr-5 lg:pl-20 lg:pr-20">
-      <div class="flex flex-col justify-between w-full lg:w-1/2">
+    <div class="flex justify-between gap-5 lg:flex-row flex-col-reverse pl-5 pr-5 lg:pl-20 lg:pr-20">
+
+      <!-- Detail -->
+      <div class="lg:from-white/0 lg:to-white/0 rounded rounded-lg bg-linear-to-r from-zinc-900 to-zinc-800 p-3 flex flex-col justify-between w-full lg:w-1/2">
         <h5 class="flex items-center gap-1 text-lg font-semibold text-orange-400">Halo,
           <span class="text-orange-300 pr-1">Saya</span>
         </h5>
         <h1 class="text-2xl lg:text-4xl font-bold">Muhammad Fadhil Abiprayana</h1>
-        <h3 class="font-semibold text-xl lg:text-2xl text-orange-400">Web Developer <span class="text-white">| Cloud
-            Engineer</span></h3>
+        <h3 class="font-semibold text-xl lg:text-2xl text-orange-400">Web Developer <span class="text-white">| Front-end</span></h3>
         <h6 class="text-sm pt-1 pb-1 lg:pt-0 lg:pb-0 lg:text-md ">Saya adalah seorang pelajar dan programmer yang
           memiliki semangat tinggi dalam dunia teknologi, khususnya
           dalam pengembangan web. Saya suka membangun aplikasi yang bermanfaat.</h6>
@@ -229,11 +230,14 @@ useSwipe(learningSkillRef, {
             {{ umur() }} Tahun
           </span>
         </div>
-        <div class="pt-2 lg:pt-0">
+        <div class="pt-2 lg:pt-0 flex gap-1">
           <Icon width="35" icon="mdi:github" />
+          <Icon width="35" icon="ic:round-facebook"></Icon>
         </div>
       </div>
-      <img src="/goku.png" class="w-1/3 h-90 w-full lg:w-1/3  lg:w rounded-lg shadow-lg shadow-gray-900">
+
+      <!-- Profil -->
+      <img src="/goku.png" class="h-80 lg:h-90 w-full lg:w-1/3  lg:w rounded-lg shadow-lg shadow-gray-900">
     </div>
   </section>
 
