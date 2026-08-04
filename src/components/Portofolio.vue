@@ -35,25 +35,40 @@ const sw = ref({
 
 const Keahlian = ref({
   main: [
-    { img: "/html.jpg", name: "HTML" },
-    { img: "/tailwindcss.png", name: "Tailwindcss" },
-    { img: "/js.png", name: "Javascript" },
-    { img: "/node.png", name: "NodeJs" },
-    { img: "/vue.svg", name: "Vue" },
-    { img: "/react.png", name: "React" },
-    { img: "/vite.svg", name: "Vite" },
-    { img: "/postgres.png", name: "Postgres" },
-    { img: "/github.png", name: "Github" }
+    { img: "/skill/html.jpg", name: "HTML" },
+    { img: "/skill/tailwindcss.png", name: "Tailwindcss" },
+    { img: "/skill/js.png", name: "Javascript" },
+    { img: "/skill/node.png", name: "NodeJs" },
+    { img: "/skill/vue.svg", name: "Vue" },
+    { img: "/skill/react.png", name: "React" },
+    { img: "/skill/vite.svg", name: "Vite" },
+    { img: "/skill/postgres.png", name: "Postgres" },
+    { img: "/skill/github.png", name: "Github" }
   ],
   learning: [
-    { img: "/nestjs.png", name: "NestJs" },
-    { img: "/docker.png", name: "Docker" }
+    { img: "/skill/nestjs.png", name: "NestJs" },
+    { img: "/skill/docker.png", name: "Docker" }
   ]
 })
 
 const information = ref([
   { icon: "bx:map", text: "Jakarta, Indonesia" },
   { icon: "ic:twotone-email", text: "nabixka@gmail.com" },
+])
+
+const project = ref([
+  {
+    name: "Mossify",
+    link: "https://mossify.nabixka.my.id",
+    description: "Website ini adalah website untuk menjual produk kokedama. Costumer bisa melihat lihat kokedama yang ada dan mengirim pesan kepada penjual. Menggunakan SPA",
+    image: '/project/Mossify.png'
+  },
+  {
+    name: "Findit",
+    link: "https://findit-download-web.vercel.app",
+    description: "DIbuat untuk membantu sesorang yang kehilangan barang/menemukan barang. Dilengkapi dengan fitur Map untuk melihat lokasi barang yang hilang.",
+    image: '/project/Findit.png'
+  }
 ])
 
 const totalSwSlides = 2
@@ -87,16 +102,16 @@ const umur = computed(() => {
 <template class="font-[Open_Sans]">
 
   <!-- Navbar Bar -->
-  <nav class="fixed top-3 left-2 right-2 z-30">
+  <nav class="fixed top-3 left-3 right-3 z-30">
     <div class="flex justify-center">
       <div class="flex gap-5 justify-between rounded-2xl bg-zinc-700 px-4 py-2">
         <button v-for="i in menus" :key="i.text" @click="activePage = i.text"
-        :class="activePage === i.text ? 'text-white font-semibold' : 'text-gray-400'"
-        class="hover:cursor-pointer transition-colors">
-        {{ i.text }}
-      </button>
+          :class="activePage === i.text ? 'text-white font-semibold' : 'text-gray-400'"
+          class="hover:cursor-pointer transition-colors text-sm">
+          {{ i.text }}
+        </button>
+      </div>
     </div>
-  </div>
   </nav>
 
   <!-- Hero / Home Section -->
@@ -142,7 +157,7 @@ const umur = computed(() => {
 
   <!-- Keahlian Section -->
   <section v-if="activePage == 'Skill'" id="skill"
-    class="min-h-screen bg-linear-to-r/hsl from-zinc-950/90 to-zinc-900/90 px-5 lg:px-20 flex flex-col justify-center gap-10 py-10">
+    class="bg-linear-to-r/hsl from-zinc-950 to-zinc-900 min-h-screen px-5 lg:px-20 flex flex-col justify-center gap-10 py-10">
     <div class="flex flex-col items-center lg:gap-0 gap-10">
       <span class="flex font-bold items-center justify-center gap-1 text-2xl text-orange-400 mb-6">
         <Icon icon="mdi:code" color="#f7bd62" width="25" />Keahlian Saya
@@ -176,6 +191,8 @@ const umur = computed(() => {
           </div>
         </div>
       </div>
+
+      <!-- bg-linear-to-r/hsl from-zinc-950/90 to-zinc-900/90 -->
 
       <!-- Layout Mobile (Menggunakan Swiper Vue) -->
       <div class="flex flex-col lg:hidden w-full gap-3">
@@ -281,4 +298,18 @@ const umur = computed(() => {
     </div>
   </section>
 
+  <section v-if="activePage == 'Project'" class="text-gray-400 bg-linear-to-r/hsl from-zinc-950 to-zinc-900 min-h-screen">
+    <div class="flex flex-col items-center gap-5 pt-[15%] lg:pt-[7%] ">
+      <a :href="i.link" v-for="(i, index) in project" :key="index" :class="index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'" class="flex-col-reverse flex lg:w-3/5 gap-5 p-3 rounded h-full lg:border-l lg:border-r border-gray-500">
+        <div class="flex flex-col lg:justify-between gap-1 h-50">
+          <div class="flex flex-col gap-2">
+            <h3 class="text-2xl text-white font-semibold">{{ i.name }}</h3>
+            <h5>{{ i.description }}</h5>
+          </div>
+          <a class="text-lg text-yellow-700">View Project</a>
+        </div>
+        <img class="w-100 h-50 rounded" :src="i.image">
+      </a>
+    </div>
+  </section>
 </template>
