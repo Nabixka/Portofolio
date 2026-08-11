@@ -22,9 +22,9 @@ const menus = ref([
 
 const sw = ref({
   str: [
-    { id: 1, value: "Adaptif" },
+    { id: 1, value: "Berpikir logis" },
     { id: 2, value: "Suka bekerja di lapangan" },
-    { id: 3, value: "Mampu Berbahasa Inggris" },
+    { id: 3, value: "Tidak mudah menyerah" },
   ],
   weak: [
     { id: 1, value: "Terlalu memikirkan banyak hal" },
@@ -35,7 +35,7 @@ const sw = ref({
 
 const Keahlian = ref({
   main: [
-    { img: "/skill/html.jpg", name: "HTML" },
+    { img: "/skill/html.png", name: "HTML" },
     { img: "/skill/tailwindcss.png", name: "Tailwindcss" },
     { img: "/skill/js.png", name: "Javascript" },
     { img: "/skill/node.png", name: "NodeJs" },
@@ -46,8 +46,7 @@ const Keahlian = ref({
     { img: "/skill/github.png", name: "Github" }
   ],
   learning: [
-    { img: "/skill/nestjs.png", name: "NestJs" },
-    { img: "/skill/docker.png", name: "Docker" }
+    { img: "/skill/nestjs.png", name: "NestJs" }
   ]
 })
 
@@ -168,170 +167,154 @@ const umur = computed(() => {
         </div>
       </div>
 
-      <img src="/goku.png" class="h-80 lg:h-90 w-full lg:w-1/3 object-cover rounded-lg shadow-lg shadow-black/50">
+      <img src="/Foto.png" class="h-80 lg:h-90 w-full lg:w-1/3 object-cover rounded-lg shadow-lg shadow-black/50">
     </div>
   </section>
 
   <!-- Keahlian Section -->
   <section v-if="activePage == 'Skill'" id="skill"
-    class="bg-linear-to-r/hsl from-zinc-950 to-zinc-900 min-h-screen px-5 lg:px-20 flex flex-col justify-center gap-10 py-10">
-    <div class="flex flex-col items-center lg:gap-0 gap-10">
-      <span class="flex font-bold items-center justify-center gap-1 text-2xl text-orange-400 mb-6">
-        <Icon icon="mdi:code" color="#f7bd62" width="25" />Keahlian Saya
-      </span>
+    class="bg-linear-to-r/hsl from-zinc-950 to-zinc-900 min-h-screen px-5 lg:px-20 py-16">
+    <div class="mx-auto max-w-6xl">
+      <div class="mb-10 text-center">
+        <h2 class="mt-4 text-3xl font-bold text-white">Keahlian & Pengembangan</h2>
+        <p class="mt-2 text-sm text-slate-300">Teknologi dan skill yang saya kuasai serta yang sedang saya pelajari.</p>
+      </div>
 
-      <!-- Layout Desktop -->
-      <div class="hidden lg:grid grid-cols-2 items-start gap-8">
-        <div class="flex flex-col items-center">
-          <h3 class="text-xl font-semibold text-orange-300 mb-3">Main</h3>
-          <div class="grid grid-cols-5 gap-4">
+      <div class="grid gap-5 lg:grid-cols-2">
+        <div class="rounded-2xl bg-gradient-to-b from-amber-500/40 to-amber-500/5 border border-amber-500/20 p-5 shadow-lg shadow-cyan-950/30 backdrop-blur-sm">
+          <div class="mb-5 flex items-center gap-3 text-amber-300 font-bold text-lg">
+            <Icon icon="mdi:code" class="text-2xl" />
+            <span>Main Skill</span>
+          </div>
+          <div class="grid grid-cols-3 gap-4 sm:grid-cols-4 lg:grid-cols-5">
             <div v-for="m in Keahlian.main" :key="m.name"
-              class="hover:scale-105 transition flex flex-col items-center justify-between bg-zinc-800 border border-zinc-700 p-3 rounded-lg w-24 h-28 shadow-md">
-              <div class="flex flex-1 items-center justify-center">
+              class="flex flex-col items-center justify-between rounded-xl border border-amber-500/20 bg-zinc-900/70 p-3 transition duration-300 hover:-translate-y-1 hover:border-amber-400/40">
+              <div class="flex h-12 items-center justify-center">
                 <img class="h-10 w-10 object-contain" :src="m.img" :alt="m.name">
               </div>
-              <p class="mt-2 text-center text-xs font-medium text-zinc-200">{{ m.name }}</p>
+              <p class="mt-2 text-center text-[10px] font-medium text-zinc-200">{{ m.name }}</p>
             </div>
           </div>
         </div>
 
-        <div class="flex flex-col items-center">
-          <h3 class="text-xl font-semibold text-orange-300 mb-3">Learning</h3>
-          <div class="flex gap-4">
+        <div class="rounded-2xl bg-gradient-to-b from-amber-500/40 to-amber-500/5 border border-amber-500/20 p-5 shadow-lg shadow-cyan-950/30 backdrop-blur-sm">
+          <div class="mb-5 flex items-center gap-3 text-amber-300 font-bold text-lg">
+            <Icon icon="mdi:book-open-page-variant" class="text-2xl" />
+            <span>Learning</span>
+          </div>
+          <div class="flex flex-wrap gap-4">
             <div v-for="l in Keahlian.learning" :key="l.name"
-              class="flex flex-col items-center justify-between bg-zinc-800 border border-zinc-700 p-3 rounded-lg w-24 h-28 shadow-md">
-              <div class="flex flex-1 items-center justify-center">
+              class="flex w-24 flex-col items-center justify-between rounded-xl border border-amber-500/20 bg-zinc-900/70 p-3 transition duration-300 hover:-translate-y-1 hover:border-amber-400/40">
+              <div class="flex h-12 items-center justify-center">
                 <img class="h-10 w-10 object-contain" :src="l.img" :alt="l.name">
               </div>
-              <p class="mt-2 text-center text-xs font-medium text-zinc-200">{{ l.name }}</p>
+              <p class="mt-2 text-center text-[10px] font-medium text-zinc-200">{{ l.name }}</p>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- bg-linear-to-r/hsl from-zinc-950/90 to-zinc-900/90 -->
-
-      <!-- Layout Mobile (Menggunakan Swiper Vue) -->
-      <div class="flex flex-col lg:hidden w-full gap-3">
-        <h3 class="font-bold text-center text-lg text-orange-300">Main Skill</h3>
-        <Swiper :slides-per-view="3.2" :space-between="10" class="w-full">
-          <SwiperSlide v-for="item in Keahlian.main" :key="item.name">
-            <div
-              class="flex flex-col items-center justify-center bg-zinc-800 border border-zinc-700 p-3 rounded-xl h-28 shadow">
-              <img :src="item.img" :alt="item.name" class="h-10 w-10 object-contain">
-              <p class="mt-2 text-xs font-medium text-center text-zinc-200">{{ item.name }}</p>
-            </div>
-          </SwiperSlide>
-        </Swiper>
-      </div>
-
-      <div class="flex flex-col lg:hidden w-full items-center gap-3">
-        <h3 class="font-bold text-center text-lg text-orange-300">Learning</h3>
-        <Swiper :slides-per-view="2" :space-between="10" class="w-full">
-          <SwiperSlide v-for="item in Keahlian.learning" :key="item.name">
-            <div
-              class="flex flex-col items-center justify-center bg-zinc-800 border border-zinc-700 p-3 rounded-xl h-28 shadow">
-              <img :src="item.img" :alt="item.name" class="h-10 w-10 object-contain">
-              <p class="mt-2 text-xs font-medium text-center text-zinc-200">{{ item.name }}</p>
-            </div>
-          </SwiperSlide>
-        </Swiper>
-      </div>
-    </div>
-
-    <!-- Kelebihan & Kekurangan -->
-    <!-- Desktop Grid -->
-    <div class="hidden lg:grid grid-cols-2 gap-5">
-      <div
-        class="p-6 rounded-2xl bg-gradient-to-b from-amber-500/10 to-amber-500/5 border border-amber-500/20 space-y-3">
-        <div class="flex items-center gap-3 text-amber-400 font-bold text-lg">
-          <Icon icon="mdi:like-outline" class="text-2xl" />
-          <span>Kelebihan</span>
+      <div class="mt-6 hidden gap-5 lg:grid lg:grid-cols-2">
+        <div class="rounded-2xl bg-gradient-to-b from-amber-500/10 to-amber-500/5 border border-amber-500/20 p-5 space-y-3">
+          <div class="flex items-center gap-3 text-amber-400 font-bold text-lg">
+            <Icon icon="mdi:like-outline" class="text-2xl" />
+            <span>Kelebihan</span>
+          </div>
+          <ul class="space-y-2">
+            <li v-for="s in sw.str" :key="s.id" class="flex items-start gap-3 text-sm text-zinc-300">
+              <Icon icon="ei:check" class="text-amber-400 text-xl shrink-0 mt-0.5" />
+              <span>{{ s.value }}</span>
+            </li>
+          </ul>
         </div>
-        <ul class="space-y-2">
-          <li v-for="s in sw.str" :key="s.id" class="flex items-start gap-3 text-sm text-zinc-300">
-            <Icon icon="ei:check" class="text-amber-400 text-xl shrink-0 mt-0.5" />
-            <span>{{ s.value }}</span>
-          </li>
-        </ul>
-      </div>
 
-      <div class="p-6 rounded-2xl bg-zinc-950/60 border border-zinc-800 space-y-3">
-        <div class="flex items-center gap-3 text-zinc-400 font-bold text-lg">
-          <Icon icon="mdi:dislike-outline" class="text-2xl text-amber-500/70" />
-          <span>Kekurangan</span>
+        <div class="rounded-2xl bg-gradient-to-b from-zinc-900/80 to-zinc-950/80 border border-zinc-700 p-5 space-y-3">
+          <div class="flex items-center gap-3 text-zinc-400 font-bold text-lg">
+            <Icon icon="mdi:dislike-outline" class="text-2xl text-amber-500/70" />
+            <span>Kekurangan</span>
+          </div>
+          <ul class="space-y-2">
+            <li v-for="w in sw.weak" :key="w.id" class="flex items-start gap-3 text-sm text-zinc-400">
+              <Icon icon="meteor-icons:circle-xmark" class="text-zinc-500 text-base shrink-0 mt-0.5" />
+              <span>{{ w.value }}</span>
+            </li>
+          </ul>
         </div>
-        <ul class="space-y-2">
-          <li v-for="w in sw.weak" :key="w.id" class="flex items-start gap-3 text-sm text-zinc-400">
-            <Icon icon="meteor-icons:circle-xmark" class="text-zinc-500 text-base shrink-0 mt-0.5" />
-            <span>{{ w.value }}</span>
-          </li>
-        </ul>
       </div>
-    </div>
 
-    <!-- Mobile Swiper (Kelebihan / Kekurangan) -->
-    <div class="flex lg:hidden mb-5 flex-col text-white">
-      <div class="overflow-hidden" ref="swRef">
-        <div class="flex w-full transition-transform duration-300 ease-out"
-          :style="{ transform: `translateX(-${currentSwIndex * 100}%)` }">
-          <!-- Kelebihan Slide -->
-          <div
-            class="w-full shrink-0 p-5 rounded-2xl bg-gradient-to-b from-amber-500/10 to-amber-500/5 border border-amber-500/20 space-y-3">
-            <div class="flex items-center gap-2 text-amber-400 font-bold text-lg">
-              <Icon icon="mdi:like-outline" class="text-xl" />
-              <span>Kelebihan</span>
+      <div class="mt-6 flex lg:hidden flex-col text-white">
+        <div class="overflow-hidden" ref="swRef">
+          <div class="flex w-full transition-transform duration-300 ease-out"
+            :style="{ transform: `translateX(-${currentSwIndex * 100}%)` }">
+            <div class="w-full shrink-0 rounded-2xl bg-gradient-to-b from-amber-500/10 to-amber-500/5 border border-amber-500/20 p-5 space-y-3">
+              <div class="flex items-center gap-2 text-amber-400 font-bold text-lg">
+                <Icon icon="mdi:like-outline" class="text-xl" />
+                <span>Kelebihan</span>
+              </div>
+              <ul class="space-y-2">
+                <li v-for="s in sw.str" :key="s.id" class="flex items-start gap-2 text-sm text-zinc-300">
+                  <Icon icon="ei:check" class="text-amber-400 text-lg shrink-0" />
+                  <span>{{ s.value }}</span>
+                </li>
+              </ul>
             </div>
-            <ul class="space-y-2">
-              <li v-for="s in sw.str" :key="s.id" class="flex items-start gap-2 text-sm text-zinc-300">
-                <Icon icon="ei:check" class="text-amber-400 text-lg shrink-0" />
-                <span>{{ s.value }}</span>
-              </li>
-            </ul>
+
+            <div class="w-full shrink-0 rounded-2xl bg-gradient-to-b from-zinc-900/80 to-zinc-950/80 border border-zinc-700 p-5 space-y-3">
+              <div class="flex items-center gap-2 text-zinc-400 font-bold text-lg">
+                <Icon icon="mdi:dislike-outline" class="text-xl text-amber-500/70" />
+                <span>Kekurangan</span>
+              </div>
+              <ul class="space-y-2">
+                <li v-for="w in sw.weak" :key="w.id" class="flex items-start gap-2 text-sm text-zinc-400">
+                  <Icon icon="meteor-icons:circle-xmark" class="text-zinc-500 text-base shrink-0" />
+                  <span>{{ w.value }}</span>
+                </li>
+              </ul>
+            </div>
           </div>
 
-          <!-- Kekurangan Slide -->
-          <div class="w-full shrink-0 p-5 rounded-2xl bg-zinc-950/60 border border-zinc-800 space-y-3">
-            <div class="flex items-center gap-2 text-zinc-400 font-bold text-lg">
-              <Icon icon="mdi:dislike-outline" class="text-xl text-amber-500/70" />
-              <span>Kekurangan</span>
-            </div>
-            <ul class="space-y-2">
-              <li v-for="w in sw.weak" :key="w.id" class="flex items-start gap-2 text-sm text-zinc-400">
-                <Icon icon="meteor-icons:circle-xmark" class="text-zinc-500 text-base shrink-0" />
-                <span>{{ w.value }}</span>
-              </li>
-            </ul>
+          <div class="mt-4 flex justify-center gap-2">
+            <button v-for="(_, idx) in totalSwSlides" :key="idx" @click="currentSwIndex = idx"
+              class="h-2 rounded-full transition-all duration-300"
+              :class="currentSwIndex === idx ? 'w-6 bg-orange-400' : 'w-2 bg-zinc-700'"></button>
           </div>
-        </div>
-
-        <!-- Pagination Dots Mobile -->
-        <div class="flex justify-center gap-2 mt-4">
-          <button v-for="(_, idx) in totalSwSlides" :key="idx" @click="currentSwIndex = idx"
-            class="h-2 rounded-full transition-all duration-300"
-            :class="currentSwIndex === idx ? 'w-6 bg-orange-400' : 'w-2 bg-zinc-700'"></button>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Project -->
-  <section v-if="activePage == 'Project'" class="text-gray-400 bg-linear-to-r/hsl from-zinc-950 to-zinc-900 min-h-screen">
-    <div class="flex flex-col items-center gap-5 pt-[15%] lg:pt-[5%] pb-10">
+  <section v-if="activePage == 'Project'" class="text-gray-400 bg-linear-to-r/hsl from-zinc-950 to-zinc-900 min-h-screen px-5 lg:px-20 py-16">
+    <div class="mx-auto max-w-5xl">
       <div class="mb-10 text-center">
         <h2 class="mt-4 text-3xl font-bold text-white">Project</h2>
-        <p class="mt-2 text-sm text-slate-300">Beberapa Project yang telah saya kerjakan.</p>
+        <p class="mt-2 text-sm text-slate-300">Beberapa project yang telah saya kerjakan dengan fokus pada pengalaman pengguna dan solusi nyata.</p>
       </div>
-      <a :href="i.link" v-for="(i, index) in project" :key="index" :class="index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'" class="flex-col-reverse flex lg:w-3/5 gap-5 p-3 rounded h-full lg:border-l lg:border-r border-gray-500">
-        <div class="flex flex-col lg:justify-between gap-1 h-50">
-          <div class="flex flex-col gap-2">
-            <h3 class="text-2xl text-white font-semibold">{{ i.name }}</h3>
-            <h5>{{ i.description }}</h5>
+
+      <div class="space-y-6">
+        <div v-for="(item, index) in project" :key="item.name"
+          class="overflow-hidden rounded-2xl border border-amber-500/20 bg-gradient-to-b from-amber-500/40 to-amber-500/5 shadow-lg shadow-cyan-950/30 backdrop-blur-sm">
+          <div class="grid gap-0 lg:grid-cols-2" :class="index % 2 === 0 ? '' : 'lg:[&>*:first-child]:order-2'">
+            <div class="flex flex-col justify-between gap-4 p-5 lg:p-6">
+              <div>
+                <span class="inline-flex rounded-full bg-amber-300/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-amber-200">
+                  Project {{ index + 1 }}
+                </span>
+                <h3 class="mt-4 text-2xl font-semibold text-white">{{ item.name }}</h3>
+                <p class="mt-3 text-sm leading-6 text-slate-300">{{ item.description }}</p>
+              </div>
+
+              <a :href="item.link" target="_blank" rel="noopener noreferrer"
+                class="inline-flex w-fit items-center gap-2 rounded-full bg-amber-300/15 px-4 py-2 text-sm font-semibold text-amber-200 transition hover:bg-amber-300/25">
+                View Project
+                <Icon icon="mdi:arrow-top-right" width="16" />
+              </a>
+            </div>
+
+            <img class="h-60 w-full object-cover object-center lg:h-full" :src="item.image" :alt="item.name">
           </div>
-          <a class="text-lg text-yellow-700">View Project</a>
         </div>
-        <img class="w-100 h-50 rounded" :src="i.image">
-      </a>
+      </div>
     </div>
   </section>
 
