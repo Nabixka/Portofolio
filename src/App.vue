@@ -23,13 +23,11 @@ const menus = ref([
 const sw = ref({
   str: [
     { id: 1, value: "Berpikir logis" },
-    { id: 2, value: "Suka bekerja di lapangan" },
-    { id: 3, value: "Tidak mudah menyerah" },
+    { id: 2, value: "Suka bekerja di lapangan" }
   ],
   weak: [
     { id: 1, value: "Terlalu memikirkan banyak hal" },
-    { id: 2, value: "Mudah tertidur saat tidak melakukan apapun" },
-    { id: 3, value: "Perlu meningkatkan kemampuan public speaking" }
+    { id: 2, value: "Mudah terlupa ketika tidak ada jadwal" }
   ]
 })
 
@@ -67,6 +65,12 @@ const project = ref([
     link: "https://findit-download-web.vercel.app",
     description: "DIbuat untuk membantu sesorang yang kehilangan barang/menemukan barang. Dilengkapi dengan fitur Map untuk melihat lokasi barang yang hilang.",
     image: '/project/Findit.png'
+  },
+  {
+    name: "Count Date",
+    link: "https://github.com/Nabixka/Count-Days",
+    description: "Aplikasi Android berupa Web view. Ini membantu user untuk menghitung hari yang sudah berlalu sejak event yang ditanggalkan",
+    image: '/project/Count_date.png'
   }
 ])
 
@@ -197,7 +201,7 @@ const umur = computed(() => {
           </div>
         </div>
 
-        <div class="rounded-2xl bg-gradient-to-b from-amber-500/40 to-amber-500/5 border border-amber-500/20 p-5 shadow-lg shadow-cyan-950/30 backdrop-blur-sm">
+        <div class="rounded-2xl bg-gradient-to-b from-zinc-900/80 to-zinc-950/80 border border-amber-500/20 p-5 shadow-lg shadow-cyan-950/30 backdrop-blur-sm">
           <div class="mb-5 flex items-center gap-3 text-amber-300 font-bold text-lg">
             <Icon icon="mdi:book-open-page-variant" class="text-2xl" />
             <span>Learning</span>
@@ -353,7 +357,7 @@ const umur = computed(() => {
         <p class="mt-2 text-sm text-slate-300">Bagian ini menampilkan pencapaian yang sudah didapat serta arah pengembangan diri.</p>
       </div>
 
-      <div class="grid gap-5 lg:grid-cols-3">
+      <div class="grid gap-5 lg:grid-cols-1">
         <div v-for="item in achievement" :key="item.title"
           class="rounded-2xl bg-gradient-to-b from-amber-500/40 to-amber-500/5 border border-amber-500/20 p-5 shadow-lg  backdrop-blur-sm">
           <div class="mb-4 flex items-center justify-between">
